@@ -6,11 +6,13 @@
 </br>🎁 不要只是下载或Fork。请 **follow** 我的GitHub、给我所有项目一个 **Star** 星星（拜托了）！你的支持是我不断前进的动力！ 💖
 </br>✅**解锁更多技术请点击进入 YouTube频道[【@AM_CLUB】](https://youtube.com/@AM_CLUB) 、[【个人博客】](https://am.809098.xyz)** 、TG群[【AM科技 | 分享交流群】](https://t.me/AM_CLUBS) 、获取免费节点[【进群发送关键字: 订阅】](https://t.me/AM_CLUBS)
 
-# 
-- 视频教程：[小白教程](https://www.youtube.com/watch?v=1ixc2A9rchM) 
+# Cloudflare Workers 和 Pages 生成Trojan节点,实现订阅连接可以一键订阅节点
+- Trojan免费节点部署视频教程：[点击进入观看](https://youtu.be/uh27CVVi6HA) 
+- VLESS免费节点部署视频教程：[点击进入观看](https://youtu.be/dPH63nITA0M) 
+- 优选IP和优选反代IP视频教程：[点击进入观看](https://youtu.be/pKrlfRRB0gU) 
+- 聚合节点订阅视频教程：[点击进入观看](https://youtu.be/YBO2hf96150)
 
-
-## Workers 部署方法 [视频教程](https://www.youtube.com/watch?v=f9hDJCqAEGA)
+## Workers 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=31s)
 
 1. 部署 CF Worker：
 
@@ -55,7 +57,7 @@
    - 在 workers控制台的 `触发器`选项卡，下方点击 `添加自定义域`。
    - 填入你已转入 CF 域名解析服务的次级域名，例如:`vless.google.com`后 点击`添加自定义域`，等待证书生效即可。
 
-## Pages 上传 部署方法
+## Pages 上传 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=336s)
 
 1. 部署 CF Pages：
    - 下载 [_worker.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-trojan/main/_worker.js.zip) 文件，并点上 Star !!!
@@ -105,7 +107,7 @@
      您分配到的域名是 `cftest.dynv6.net`，则添加自定义域填入 `trojan.cftest.dynv6.net`即可；
    - 按照 CF 的要求将返回你的域名DNS服务商，添加 该自定义域 `trojan`的 CNAME记录 `am-cf-trojan.pages.dev` 后，点击 `激活域`即可。
 
-## Pages GitHub 部署方法 [视频教程](https://youtu.be/6lhFb4hYTYw)
+## Pages GitHub 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=511s)
 
 1. 部署 CF Pages：
    - 在 Github 上先 Fork 本项目，并点上 Star !!!
@@ -180,17 +182,18 @@
 - [(安卓)v2rayNG](https://github.com/2dust/v2rayNG/releases)      [(安卓)singbox](https://github.com/SagerNet/sing-box/releases)      [(苹果)singbox](https://github.com/SagerNet/sing-box/releases)      [(苹果)Hiddify](https://github.com/hiddify/hiddify-next/releases)
 - [(win)v2rayN](https://github.com/2dust/v2rayN/releases)      [(win)singbox](https://github.com/SagerNet/sing-box/releases)      [(win)clashvergerev](https://github.com/clash-verge-rev/clash-verge-rev/releases)      [(win)Hiddify](https://github.com/hiddify/hiddify-next/releases)      [(win)clashnyanpasu](https://github.com/LibNyanpasu/clash-nyanpasu/releases)      [(mac)clashnyanpasu](https://github.com/LibNyanpasu/clash-nyanpasu/releases)
 - [(mac)v2rayU](https://github.com/yanue/V2rayU/releases)      [(mac)singbox](https://github.com/SagerNet/sing-box/releases)      [(mac)clashvergerev](https://github.com/clash-verge-rev/clash-verge-rev/releases)      [(mac)Hiddify](https://github.com/hiddify/hiddify-next/releases)
-
+- [(安卓、苹果、win、mac)karing](https://karing.app/download)
 
 ## 已适配自适应订阅内容
    - [v2rayN](https://github.com/2dust/v2rayN)
    - [v2rayU](https://github.com/yanue/V2rayU/releases)
    - [sing-box](https://github.com/SagerNet/sing-box)
    - clash.meta（[clash-verge-rev
-](https://github.com/clash-verge-rev/clash-verge-rev)，[Clash Nyanpasu](https://github.com/keiko233/clash-nyanpasu)，~[clash-verge](https://github.com/zzzgydi/clash-verge/tree/main)~，ClashX Meta、openclash）
+](https://github.com/clash-verge-rev/clash-verge-rev)，[Clash Nyanpasu](https://github.com/keiko233/clash-nyanpasu)，ClashX Meta、openclash）
    - Quantumult X
    - 小火箭
-   - surge
+   - surge 
+   - [karing](https://karing.app/download)
 
 
    # 
