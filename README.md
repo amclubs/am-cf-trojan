@@ -7,10 +7,13 @@
 </br>✅**解锁更多技术请点击进入 YouTube频道[【@AM_CLUB】](https://youtube.com/@AM_CLUB) 、[【个人博客】](https://am.809098.xyz)** 、TG群[【AM科技 | 分享交流群】](https://t.me/AM_CLUBS) 、获取免费节点[【进群发送关键字: 订阅】](https://t.me/AM_CLUBS)
 
 # Cloudflare Workers 和 Pages 生成Trojan节点,实现订阅连接可以一键订阅节点
-- Trojan免费节点部署视频教程：[点击进入观看](https://youtu.be/uh27CVVi6HA) 
 - VLESS免费节点部署视频教程：[点击进入观看](https://youtu.be/dPH63nITA0M) 
-- 优选IP和优选反代IP视频教程：[点击进入观看](https://youtu.be/pKrlfRRB0gU) 
+- Trojan免费节点部署视频教程：[点击进入观看](https://youtu.be/uh27CVVi6HA) 
+- 优选IP和优选反代IP视频教程：[点击进入观看](https://youtu.be/pKrlfRRB0gU)
+- GitHub私有库存储优选IP文：[点击进入观看](https://youtu.be/vX3U3FuuTT8)
+- CF免费KV存储优选IP文件：[点击进入观看](https://youtu.be/dzxezRV1v-o)
 - 聚合节点订阅视频教程：[点击进入观看](https://youtu.be/YBO2hf96150)
+- 免费域名视频教程：[点击进入观看](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR)
 
 ## Workers 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=31s)
 
