@@ -78,6 +78,7 @@ let chatID = '';
 
 let pwd;
 
+const httpPattern = /^http(s)?:\/\/.+/;
 // if (!isValidUUID(userID)) {
 // 	throw new Error('uuid is invalid');
 // }
@@ -118,8 +119,21 @@ export default {
 			pwd = sha256.sha224(userID);
 
 			if (PROXYIP) {
-				proxyIPs = await addIpText(PROXYIP);
-				proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
+				if (httpPattern.test(PROXYIP)) {
+					let proxyIpTxt = await addIpText(PROXYIP);
+					let ipUrlTxtAndCsv;
+					if (PROXYIP.endsWith('.csv')) {
+						ipUrlTxtAndCsv = await getIpUrlTxtAndCsv(noTLS, null, proxyIpTxt);
+
+					} else {
+						ipUrlTxtAndCsv = await getIpUrlTxtAndCsv(noTLS, proxyIpTxt, null);
+					}
+					const uniqueIpTxt = [...new Set([...ipUrlTxtAndCsv.txt, ...ipUrlTxtAndCsv.csv])];
+					proxyIP = uniqueIpTxt[Math.floor(Math.random() * uniqueIpTxt.length)];
+				} else {
+					proxyIPs = await addIpText(PROXYIP);
+					proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
+				}
 				const [ip, port] = proxyIP.split(':');
 				proxyIP = ip;
 				proxyPort = port || proxyPort;
@@ -952,7 +966,7 @@ async function getTROJANConfig(userID, host, userAgent, _url) {
 
 	// Get node information
 	fakeHostName = getFakeHostName(host);
-	const ipUrlTxtAndCsv = await getIpUrlTxtAndCsv(noTLS);
+	const ipUrlTxtAndCsv = await getIpUrlTxtAndCsv(noTLS, ipUrlTxt, ipUrlCsv);
 
 	// console.log(`txt: ${ipUrlTxtAndCsv.txt} \n csv: ${ipUrlTxtAndCsv.csv}`);
 	let content = await getSubscribeNode(userAgent, _url, host, fakeHostName, fakeUserID, noTLS, ipUrlTxtAndCsv.txt, ipUrlTxtAndCsv.csv);
@@ -987,21 +1001,21 @@ function getFakeHostName(host) {
 	return `${fakeHostName}.xyz`;
 }
 
-async function getIpUrlTxtAndCsv(noTLS) {
+async function getIpUrlTxtAndCsv(noTLS, urlTxts, urlCsvs) {
 	if (noTLS === 'true') {
 		return {
-			txt: await getIpUrlTxt(ipUrlTxt),
-			csv: await getIpUrlCsv('FALSE')
+			txt: await getIpUrlTxt(urlTxts),
+			csv: await getIpUrlCsv(urlCsvs, 'FALSE')
 		};
 	}
 	return {
-		txt: await getIpUrlTxt(ipUrlTxt),
-		csv: await getIpUrlCsv('TRUE')
+		txt: await getIpUrlTxt(urlTxts),
+		csv: await getIpUrlCsv(urlCsvs, 'TRUE')
 	};
 }
 
-async function getIpUrlTxt(ipUrlTxts) {
-	if (!ipUrlTxts || ipUrlTxts.length === 0) {
+async function getIpUrlTxt(urlTxts) {
+	if (!urlTxts || urlTxts.length === 0) {
 		return [];
 	}
 
@@ -1018,7 +1032,7 @@ async function getIpUrlTxt(ipUrlTxts) {
 	try {
 		// Use Promise.allSettled to wait for all API requests to complete, regardless of success or failure
 		// Iterate over the api array and send a fetch request to each API URL
-		const responses = await Promise.allSettled(ipUrlTxts.map(apiUrl => fetch(apiUrl, {
+		const responses = await Promise.allSettled(urlTxts.map(apiUrl => fetch(apiUrl, {
 			method: 'GET',
 			headers: {
 				'Accept': 'text/html,application/xhtml+xml,application/xml;',
@@ -1051,16 +1065,16 @@ async function getIpUrlTxt(ipUrlTxts) {
 	return newIpTxt;
 }
 
-async function getIpUrlCsv(tls) {
+async function getIpUrlCsv(urlCsvs, tls) {
 	// Check if the CSV URLs are valid
-	if (!ipUrlCsv || ipUrlCsv.length === 0) {
+	if (!urlCsvs || urlCsvs.length === 0) {
 		return [];
 	}
 
 	const newAddressesCsv = [];
 
 	// Fetch and process all CSVs concurrently
-	const fetchCsvPromises = ipUrlCsv.map(async (csvUrl) => {
+	const fetchCsvPromises = urlCsvs.map(async (csvUrl) => {
 		try {
 			const response = await fetch(csvUrl);
 
