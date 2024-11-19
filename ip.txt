@@ -1,0 +1,6 @@
+198.62.62.156:443#US
+162.159.129.11:2053#US
+braden.ns.cloudflare.com
+[2606:4700:3036:6ed4:ffdf:f2ba:820b:ed5c]#IPV6
+104.17.71.31:443#HK
+time.is
