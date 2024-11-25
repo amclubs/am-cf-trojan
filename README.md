@@ -163,7 +163,7 @@
    - 按照 CF 的要求将返回你的域名DNS服务商，添加 该自定义域 `trojan`的 CNAME记录 `am-cf-trojan.pages.dev` 后，点击 `激活域`即可。
 
 
-## 变量说明
+## 变量说明 [视频教程](https://www.youtube.com/watch?v=ag12Rpc9KP4&t=739s)
 | 变量名 | 示例 | 必填 | 备注 | YT |
 |-----|-----|-----|-----|-----|
 | PASSWORD         | auto                                 |✅| 节点的密码，可以取任意值                                       |  |
