@@ -20,7 +20,7 @@ let proxyIPs = [
 // Randomly select a proxy IP from the list
 let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
 let proxyPort = 443;
-let proxyIpTxt = 'https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/proxyip.txt';
+let proxyIpTxt = atob('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2FtY2x1YnMvYW0tY2YtdHVubmVsL21haW4vcHJveHlpcC50eHQ=');
 
 // Setting the socks5 will ignore proxyIP
 // Example:  user:pass@host:port  or  host:port
@@ -33,12 +33,14 @@ let parsedSocks5 = {};
 let dohURL = 'https://sky.rethinkdns.com/1:-Pf_____9_8A_AMAIgE8kMABVDDmKOHTAKg=';
 
 // Preferred address API interface
+let ipUrl = [
+
+];
 let ipUrlTxt = [
-	'https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.txt',
-	// 'https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv6.txt'
+	atob('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2FtY2x1YnMvYW0tY2YtdHVubmVsL21haW4vaXB2NC50eHQ=')
 ];
 let ipUrlCsv = [
-	// 'https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.csv'
+	// atob('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2FtY2x1YnMvYW0tY2YtdHVubmVsL21haW4vaXB2NC5jc3Y=')
 ];
 // Preferred addresses with optional TLS subscription
 let ipLocal = [
@@ -78,7 +80,10 @@ let chatID = '';
 
 let pwd;
 
+let projectName = atob('YW1jbHVicy9hbS1jZi10dW5uZWw');
+let ytName = atob('aHR0cHM6Ly95b3V0dWJlLmNvbS9AQU1fQ0xVQg==');
 const httpPattern = /^http(s)?:\/\/.+/;
+
 // if (!isValidUUID(userID)) {
 // 	throw new Error('uuid is invalid');
 // }
@@ -93,12 +98,13 @@ export default {
 	async fetch(request, env, ctx) {
 		try {
 			// Destructure environment variables for clarity
-			const {
+			let {
 				PASSWORD,
 				PROXYIP,
 				SOCKS5,
 				DNS_RESOLVER_URL,
 				IP_LOCAL,
+				IP_URL,
 				IP_URL_TXT,
 				IP_URL_CSV,
 				NO_TLS,
@@ -118,6 +124,9 @@ export default {
 			userID = (PASSWORD || userID).toLowerCase();
 			pwd = sha256.sha224(userID);
 
+			const url = new URL(request.url);
+
+			PROXYIP = url.searchParams.get('PROXYIP') || PROXYIP;
 			if (PROXYIP) {
 				if (httpPattern.test(PROXYIP)) {
 					let proxyIpTxt = await addIpText(PROXYIP);
@@ -145,19 +154,37 @@ export default {
 			proxyIP = ip;
 			proxyPort = port || proxyPort;
 
-			const url = new URL(request.url);
-			socks5 = SOCKS5 || url.searchParams.get('socks5') || socks5;
+			socks5 = url.searchParams.get('SOCKS5') || SOCKS5 || socks5;
 			parsedSocks5 = await parseSocks5FromUrl(socks5, url);
 			if (parsedSocks5) {
 				socks5Enable = true;
 			}
 
-			dohURL = (DNS_RESOLVER_URL || dohURL);
+			dohURL = url.searchParams.get('DNS_RESOLVER_URL') || DNS_RESOLVER_URL || dohURL;
 
+			IP_LOCAL = url.searchParams.get('IP_LOCAL') || IP_LOCAL;
 			if (IP_LOCAL) {
 				ipLocal = await addIpText(IP_LOCAL);
 			}
+			const newCsvUrls = [];
+			const newTxtUrls = [];
+			IP_URL = url.searchParams.get('IP_URL') || IP_URL;
+			if (IP_URL) {
+				ipUrlTxt = [];
+				ipUrl = await addIpText(IP_URL);
+				ipUrl = await getIpUrlTxt(ipUrl);
+				ipUrl.forEach(url => {
+					if (url.endsWith('.csv')) {
+						newCsvUrls.push(url);
+					} else {
+						newTxtUrls.push(url);
+					}
+				});
+			}
 			//兼容旧的，如果有IP_URL_TXT新的则不用旧的
+			ADDRESSESAPI = url.searchParams.get('ADDRESSESAPI') || ADDRESSESAPI;
+			IP_URL_TXT = url.searchParams.get('IP_URL_TXT') || IP_URL_TXT;
+			IP_URL_CSV = url.searchParams.get('IP_URL_CSV') || IP_URL_CSV;
 			if (ADDRESSESAPI) {
 				ipUrlTxt = await addIpText(ADDRESSESAPI);
 			}
@@ -167,14 +194,16 @@ export default {
 			if (IP_URL_CSV) {
 				ipUrlCsv = await addIpText(IP_URL_CSV);
 			}
+			ipUrlCsv = [...new Set([...ipUrlCsv, ...newCsvUrls])];
+			ipUrlTxt = [...new Set([...ipUrlTxt, ...newTxtUrls])];
 
-			noTLS = (NO_TLS || noTLS);
-			sl = (SL || sl);
-			subConfig = (SUB_CONFIG || subConfig);
-			subConverter = (SUB_CONVERTER || subConverter);
-			fileName = (SUB_NAME || fileName);
-			botToken = (TG_TOKEN || botToken);
-			chatID = (TG_ID || chatID);
+			noTLS = url.searchParams.get('NO_TLS') || NO_TLS || noTLS;
+			sl = url.searchParams.get('SL') || SL || sl;
+			subConfig = url.searchParams.get('SUB_CONFIG') || SUB_CONFIG || subConfig;
+			subConverter = url.searchParams.get('SUB_CONVERTER') || SUB_CONVERTER || subConverter;
+			fileName = url.searchParams.get('SUB_NAME') || SUB_NAME || fileName;
+			botToken = url.searchParams.get('TG_TOKEN') || TG_TOKEN || botToken;
+			chatID = url.searchParams.get('TG_ID') || TG_ID || chatID;
 
 			// Unified protocol for handling subconverters
 			const [subProtocol, subConverterWithoutProtocol] = (subConverter.startsWith("http://") || subConverter.startsWith("https://"))
@@ -982,7 +1011,7 @@ async function getchannelConfig(userID, host, userAgent, _url) {
 }
 
 function getHtmlResponse(socks5Enable, userID, host, v2ray, clash) {
-	const subRemark = `IP_URL_TXT/IP_URL_CSV/IP_LOCAL`;
+	const subRemark = `IP_LOCAL/IP_URL/IP_URL_TXT/IP_URL_CSV`;
 	let proxyIPRemark = `PROXYIP: ${proxyIP}`;
 
 	if (socks5Enable) {
