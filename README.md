@@ -7,17 +7,10 @@
 </br>✅**解锁更多技能** [加入TG群【am_clubs】](https://t.me/am_clubs)、[YouTube频道【@am_clubs】](https://youtube.com/@am_clubs?sub_confirmation=1)、[【博客(国内)】](https://amclubss.com)、[【博客(国际)】](https://amclubs.blogspot.com) 
 </br>✅点击观看教程[CLoudflare免费节点](https://www.youtube.com/playlist?list=PLGVQi7TjHKXbrY0Pk8gm3T7m8MZ-InquF) | [VPS搭建节点](https://www.youtube.com/playlist?list=PLGVQi7TjHKXaVlrHP9Du61CaEThYCQaiY) | [获取免费域名](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR) | [免费VPN](https://www.youtube.com/playlist?list=PLGVQi7TjHKXY7V2JF-ShRSVwGANlZULdk) | [IPTV源](https://www.youtube.com/playlist?list=PLGVQi7TjHKXbkozDYVsDRJhbnNaEOC76w) | [Mac和Win工具](https://www.youtube.com/playlist?list=PLGVQi7TjHKXYBWu65yP8E08HxAu9LbCWm) | [AI分享](https://www.youtube.com/playlist?list=PLGVQi7TjHKXaodkM-mS-2Nwggwc5wRjqY)
 
-# Cloudflare Workers 和 Pages 生成Trojan节点,实现订阅连接可以一键订阅节点
-- VLESS免费节点部署视频教程：[点击进入观看](https://youtu.be/dPH63nITA0M) 
-- Trojan免费节点部署视频教程：[点击进入观看](https://youtu.be/uh27CVVi6HA) 
-- 优选IP和优选反代IP视频教程：[点击进入观看](https://youtu.be/pKrlfRRB0gU)
-- GitHub私有库存储优选IP文：[点击进入观看](https://youtu.be/vX3U3FuuTT8)
-- CF免费KV存储优选IP文件：[点击进入观看](https://youtu.be/dzxezRV1v-o)
-- 聚合节点订阅视频教程：[点击进入观看](https://youtu.be/YBO2hf96150)
-- 免费域名视频教程：[点击进入观看](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR)
-- 解决常见订阅测试-1：[点击进入观看](https://youtu.be/kYQxV1G-ePw)
-- 获取CF自家域名无限节点：[点击进入观看](https://youtu.be/novrPiMsK70)
-- 报错 Error 1101 和 522 解决方案教程：[点击进入观看](https://youtu.be/4fcyJjstFdg)
+# 推荐视频教程
+- [Error 1101 和 522 报错解决方案教程](https://youtu.be/4fcyJjstFdg) | [优选IP和优选反代IP视频教程](https://youtu.be/pKrlfRRB0gU) | [解决常见订阅测试-1问题教程](https://youtu.be/kYQxV1G-ePw)
+- [VLESS免费节点部署教程](https://youtu.be/dPH63nITA0M) | [Trojan免费节点部署教程](https://youtu.be/uh27CVVi6HA) | [从入门到精通免费部署教程](https://youtu.be/ag12Rpc9KP4) | [聚合节点订阅教程](https://youtu.be/YBO2hf96150)
+- [GitHub私有库存储优选IP文教程](https://youtu.be/vX3U3FuuTT8) | [CF免费KV存储优选IP文件教程](https://youtu.be/dzxezRV1v-o) [获取免费域名教程](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR) | [获取CF自家域名无限节点](https://youtu.be/novrPiMsK70)
 
 ## Workers 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=31s)
 
