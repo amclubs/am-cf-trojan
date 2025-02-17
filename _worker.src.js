@@ -1,8 +1,10 @@
+
 /**
- * YouTube Channel: https://youtube.com/@AM_CLUB
+ * YouTube Channel: https://youtube.com/@am_clubs
+ * Telegram Group: https://t.me/am_clubs
  * GitHub Repository: https://github.com/amclubs
- * Telegram Group: https://t.me/AM_CLUBS
- * Personal Blog: https://am.809098.xyz
+ * Personal Blog: https://amclubs.blogspot.com
+ * Personal Blog: https://amclubss.com
  */
 
 // @ts-ignore
@@ -11,6 +13,8 @@ import { connect } from 'cloudflare:sockets';
 // Generate your own UUID using the following command in PowerShell:
 // Powershell -NoExit -Command "[guid]::NewGuid()"
 let userID = 'auto';
+let pwd;
+let kvPWD;
 
 // Proxy IPs to choose from
 let proxyIPs = [
@@ -44,9 +48,9 @@ let ipUrlCsv = [
 ];
 // Preferred addresses with optional TLS subscription
 let ipLocal = [
-	'visa.cn:443#youtube.com/@AM_CLUB 订阅频道获取更多教程',
-	'icook.hk#t.me/AM_CLUBS 加入交流群解锁更多优选节点',
-	'time.is:443#github.com/amclubs GitHub仓库查看更多项目'
+	'visa.cn:443#youtube.com/@am_clubs AM科技(订阅频道观看教程)',
+	'icook.hk#t.me/am_clubs TG群(加入解锁免费节点)',
+	'time.is#github.com/amclubs GitHub仓库(关注查看新功能)'
 ];
 let noTLS = 'false';
 let sl = 5;
@@ -77,8 +81,6 @@ let isBase64 = true;
 
 let botToken = '';
 let chatID = '';
-
-let pwd;
 
 let projectName = atob('YW1jbHVicy9hbS1jZi10dW5uZWw');
 let ytName = atob('aHR0cHM6Ly95b3V0dWJlLmNvbS9AQU1fQ0xVQg==');
@@ -120,8 +122,12 @@ export default {
 				//兼容
 				ADDRESSESAPI,
 			} = env;
-
-			userID = (PASSWORD || userID).toLowerCase();
+			const kvCheckResponse = await checkKVNamespaceBinding(env);
+			if (!kvCheckResponse) {
+				kvPWD = await getKVData(env);
+				// console.log(`kvPWD: ${kvPWD} \n `);
+			}
+			userID = (kvPWD || PASSWORD || userID).toLowerCase();
 			pwd = sha256.sha224(userID);
 
 			const url = new URL(request.url);
@@ -172,9 +178,9 @@ export default {
 			if (IP_URL) {
 				ipUrlTxt = [];
 				ipUrl = await addIpText(IP_URL);
-				ipUrl = await getIpUrlTxt(ipUrl);
+				ipUrl = await getIpUrlTxtToArry(ipUrl);
 				ipUrl.forEach(url => {
-					if (url.endsWith('.csv')) {
+					if (getFileType(url) === 'csv') {
 						newCsvUrls.push(url);
 					} else {
 						newTxtUrls.push(url);
@@ -280,6 +286,16 @@ export default {
 						status: 200,
 						headers: commonHeaders,
 					});
+				}
+
+				case `/${userID}/ui`: {
+					return await showKVPage(env);
+				}
+				case `/${userID}/get`: {
+					return getKVData(env);
+				}
+				case `/${userID}/set`: {
+					return setKVData(request, env);
 				}
 
 				default: {
@@ -450,6 +466,34 @@ async function parseSocks5FromUrl(socks5, url) {
 		}
 	}
 	return null;
+}
+
+function getFileType(url) {
+	const baseUrl = url.split('@')[0];
+
+	const extension = baseUrl.match(/\.(csv|txt)$/i);
+
+	if (extension) {
+		return extension[1].toLowerCase();
+	} else {
+		return 'txt';
+	}
+}
+
+async function getFileContentType(url) {
+	try {
+		const response = await fetch(url);
+		const text = await response.text();
+
+		if (text.includes(',')) {
+			return 'csv';
+		} else {
+			return 'txt';
+		}
+	} catch (error) {
+		console.error('Error fetching file:', error);
+		return null;
+	}
 }
 
 // sha256 Hash Algorithm in pure JavaScript
@@ -993,9 +1037,9 @@ async function getchannelConfig(userID, host, userAgent, _url) {
 	if (host.includes('.workers.dev')) {
 		port = 80;
 	}
-	const [v2ray, clash] = getConfigLink(userID, host, host, port, host);
 
 	if (userAgent.includes('mozilla') && !subParams.some(param => _url.searchParams.has(param))) {
+		const [v2ray, clash] = getConfigLink(userID, host, host, port, host);
 		return getHtmlResponse(socks5Enable, userID, host, v2ray, clash);
 	}
 
@@ -1055,6 +1099,59 @@ async function getIpUrlTxt(urlTxts) {
 	}
 
 	let ipTxt = "";
+	const controller = new AbortController();
+	const timeout = setTimeout(() => {
+		controller.abort();
+	}, 2000);
+
+	try {
+		const urlMappings = urlTxts.map(entry => {
+			const [url, suffix] = entry.split('@');
+			return { url, suffix: suffix ? `@${suffix}` : '' };
+		});
+
+		const responses = await Promise.allSettled(
+			urlMappings.map(({ url }) =>
+				fetch(url, {
+					method: 'GET',
+					headers: {
+						'Accept': 'text/html,application/xhtml+xml,application/xml;',
+						'User-Agent': projectName
+					},
+					signal: controller.signal
+				}).then(response => response.ok ? response.text() : Promise.reject())
+			)
+		);
+
+		for (let i = 0; i < responses.length; i++) {
+			const response = responses[i];
+			if (response.status === 'fulfilled') {
+				const suffix = urlMappings[i].suffix;
+				const content = response.value
+					.split('\n')
+					.filter(line => line.trim() !== "")
+					.map(line => line + suffix)
+					.join('\n');
+
+				ipTxt += content + '\n';
+			}
+		}
+	} catch (error) {
+		console.error(error);
+	} finally {
+		clearTimeout(timeout);
+	}
+	// console.log(`ipTxt: ${ipTxt} \n `);
+	const newIpTxt = await addIpText(ipTxt);
+	return newIpTxt;
+}
+
+async function getIpUrlTxtToArry(urlTxts) {
+	if (!urlTxts || urlTxts.length === 0) {
+		return [];
+	}
+
+	let ipTxt = "";
 
 	// Create an AbortController object to control the cancellation of fetch requests
 	const controller = new AbortController();
@@ -1071,7 +1168,7 @@ async function getIpUrlTxt(urlTxts) {
 			method: 'GET',
 			headers: {
 				'Accept': 'text/html,application/xhtml+xml,application/xml;',
-				'User-Agent': 'amclubs/am-cf-tunnel'
+				'User-Agent': projectName
 			},
 			signal: controller.signal // Attach the AbortController's signal to the fetch request to allow cancellation when needed
 		}).then(response => response.ok ? response.text() : Promise.reject())));
@@ -1110,8 +1207,13 @@ async function getIpUrlCsv(urlCsvs, tls) {
 
 	// Fetch and process all CSVs concurrently
 	const fetchCsvPromises = urlCsvs.map(async (csvUrl) => {
+		// Parse the URL to get the suffix (after @)
+		const [url, suffix] = csvUrl.split('@');
+		const suffixText = suffix ? `@${suffix}` : '';  // If no @, suffixText will be an empty string
+
 		try {
-			const response = await fetch(csvUrl);
+			const response = await fetch(url);
+
 
 			// Ensure the response is successful
 			if (!response.ok) {
@@ -1146,21 +1248,19 @@ async function getIpUrlCsv(urlCsvs, tls) {
 			// Process the data rows
 			for (let i = 1; i < lines.length; i++) {
 				const columns = lines[i].trim().split(',');
-
 				// Skip empty or malformed rows
 				if (columns.length < header.length) {
 					continue;
 				}
-
 				// Check if TLS matches and speed is greater than sl
 				const tlsValue = columns[tlsIndex].toUpperCase();
 				const speedValue = parseFloat(columns[speedIndex]);
-
 				if (tlsValue === tls && speedValue > sl) {
 					const ipAddress = columns[ipAddressIndex];
 					const port = columns[portIndex];
 					const dataCenter = columns[dataCenterIndex];
-					newAddressesCsv.push(`${ipAddress}:${port}#${dataCenter}`);
+					// Add suffix to the result
+					newAddressesCsv.push(`${ipAddress}:${port}#${dataCenter}${suffixText}`);
 				}
 			}
 		} catch (error) {
@@ -1171,6 +1271,7 @@ async function getIpUrlCsv(urlCsvs, tls) {
 	// Wait for all CSVs to be processed
 	await Promise.all(fetchCsvPromises);
 
+	// console.log(`newAddressesCsv: ${newAddressesCsv} \n `);
 	return newAddressesCsv;
 }
 
@@ -1184,11 +1285,14 @@ const protocolTypeBase64 = 'dHJvamFu';
  * @param {*} remarks 
  * @returns 
  */
-function getConfigLink(uuid, host, address, port, remarks) {
+function getConfigLink(uuid, host, address, port, remarks, proxyip) {
 	const protocolType = atob(protocolTypeBase64);
 
 	const encryption = 'none';
 	let path = '/?ed=2560';
+	if (proxyip) {
+		path = `/?ed=2560&PROXYIP=${proxyip}`;
+	}
 	const fingerprint = 'randomized';
 	let tls = ['tls', true];
 	if (host.includes('.workers.dev') || host.includes('pages.dev')) {
@@ -1443,7 +1547,8 @@ function isSingboxCondition(userAgent, _url) {
  */
 function splitNodeData(uniqueIpTxt, noTLS, host, uuid, userAgent) {
 	// Regex to match IPv4 and IPv6
-	const regex = /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[.*\]):?(\d+)?#?(.*)?$/;
+	// const regex = /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[.*\]):?(\d+)?#?(.*)?$/;
+	const regex = /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[.*\]):?(\d+)?#?([^@#]*)@?(.*)?$/;
 
 	// Region codes mapped to corresponding emojis
 	const regionMap = {
@@ -1458,18 +1563,28 @@ function splitNodeData(uniqueIpTxt, noTLS, host, uuid, userAgent) {
 	};
 
 	const responseBody = uniqueIpTxt.map(ipTxt => {
+		// console.log(`splitNodeData---> ipTxt: ${ipTxt} `);
 		let address = ipTxt;
 		let port = "443";
 		let remarks = "";
+		let proxyip = "";
 
 		const match = address.match(regex);
-		if (match) {
+		if (match && !ipTxt.includes('@am_clubs')) {
 			address = match[1];
 			port = match[2] || port;
 			remarks = match[3] || host;
+			proxyip = match[4] || '';
+			// console.log(`splitNodeData--match-> \n address: ${address} \n port: ${port} \n remarks: ${remarks} \n proxyip: ${proxyip}`);
 		} else {
 			let ip, newPort, extra;
 
+			if (ipTxt.includes('@') && !ipTxt.includes('@am_clubs')) {
+				const [addressPart, proxyipPart] = ipTxt.split('@');
+				ipTxt = addressPart;
+				proxyip = proxyipPart;
+				// console.log(`splitNodeData-ipTxt.includes('@')--> ipTxt: ${ipTxt} \n proxyip: ${proxyip} `);
+			}
 			if (ipTxt.includes(':') && ipTxt.includes('#')) {
 				[ip, newPort, extra] = ipTxt.split(/[:#]/);
 			} else if (ipTxt.includes(':')) {
@@ -1483,8 +1598,7 @@ function splitNodeData(uniqueIpTxt, noTLS, host, uuid, userAgent) {
 			address = ip;
 			port = newPort || port;
 			remarks = extra || host;
-
-			// console.log(`splitNodeData---> ip: ${ip} \n extra: ${extra} \n port: ${port}`);
+			// console.log(`splitNodeData---> \n address: ${address} \n port: ${port} \n remarks: ${remarks} \n proxyip: ${proxyip}`);
 		}
 
 		// Replace region code with corresponding emoji
@@ -1495,7 +1609,7 @@ function splitNodeData(uniqueIpTxt, noTLS, host, uuid, userAgent) {
 			return null; // Skip this iteration
 		}
 
-		const [v2ray, clash] = getConfigLink(uuid, host, address, port, remarks);
+		const [v2ray, clash] = getConfigLink(uuid, host, address, port, remarks, proxyip);
 		return v2ray;
 	}).filter(Boolean).join('\n');
 
@@ -1641,6 +1755,151 @@ async function getCFSum(accountId, accountIndex, email, key, startDate, endDate)
 		console.error('Error fetching billing metrics:', error);
 		return [0, 0];
 	}
+}
+
+// const MY_KV_NAMESPACE = atob('YW1jbHVicw==');
+const MY_KV_UUID_KEY = atob('UEFTU1dPUkQ=');
+
+async function checkKVNamespaceBinding(env) {
+	if (typeof env.amclubs === 'undefined') {
+		return new Response('Error: amclubs KV_NAMESPACE is not bound.', {
+			status: 400,
+		})
+	}
+}
+
+async function getKVData(env) {
+	const value = await env.amclubs.get(MY_KV_UUID_KEY);
+	return value ? String(value) : '';
+	// return new Response(value || 'Key not found', {
+	// 	status: value ? 200 : 404
+	// });
+}
+
+async function setKVData(request, env) {
+	if (request.method !== 'POST') {
+		return new Response('Use POST method to set values', { status: 405 });
+	}
+
+	const value = await request.text();
+	// console.log(`setKVData----> Received value: ${value} \n`);
+
+	try {
+		await env.amclubs.put(MY_KV_UUID_KEY, value);
+
+		// 读取存入的值，确认是否成功
+		const storedValue = await env.amclubs.get(MY_KV_UUID_KEY);
+		if (storedValue === value) {
+			return new Response(`${MY_KV_UUID_KEY} updated successfully`, { status: 200 });
+		} else {
+			return new Response(`Error: Value verification failed after storage`, { status: 500 });
+		}
+	} catch (error) {
+		return new Response(`Error storing value: ${error.message}`, { status: 500 });
+	}
+}
+
+async function showKVPage(env) {
+	const kvCheckResponse = await checkKVNamespaceBinding(env);
+	if (kvCheckResponse) {
+		return kvCheckResponse;
+	}
+	const value = await getKVData(env);
+	return new Response(
+		`<!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8"> 
+        <title>${fileName}</title>
+        <style>
+          html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            font-family: Arial, sans-serif;
+          }
+
+          .container {
+            text-align: center; 
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            width: 400px;
+          }
+
+          h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+          }
+
+          textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+          }
+
+          button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+          }
+
+          button:hover {
+            background-color: #45a049;
+          }
+
+          #saveStatus {
+            color: green;
+            margin-top: 10px;
+          }
+        </style>
+        <script>
+          async function fetchData() {
+            const response = await fetch('/${userID}/get');
+            const text = await response.text();
+            document.getElementById('value').value = text;
+          }
+
+          async function saveData() {
+            const value = document.getElementById('value').value;
+            const response = await fetch('/${userID}/set', { method: 'POST', body: value });
+            const responseText = await response.text();
+
+            document.getElementById('saveStatus').innerText = responseText;
+          }
+        </script>
+      </head>
+      <body>
+        <div class="container">
+          <h1>UUID 页面</h1>
+          <label for="key">Key:</label>
+          <input type="text" id="key" value="${MY_KV_UUID_KEY}" readonly />
+          <br/><br/>
+          <label for="value">Value:</label>
+          <textarea id="value">${value || ''}</textarea>
+          <br/><br/>
+          <button onclick="saveData()">Save</button>
+          <div id="saveStatus"></div>
+        </div>
+      </body>
+    </html>`,
+		{
+			headers: { 'Content-Type': 'text/html; charset=UTF-8' },
+			status: 200,
+		}
+	);
 }
 
 const API_URL = 'http://ip-api.com/json/';
