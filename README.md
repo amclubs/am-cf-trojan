@@ -9,160 +9,89 @@
 
 # 推荐视频教程
 - [Error 1101 和 522 报错解决方案教程](https://youtu.be/4fcyJjstFdg) | [优选IP和优选反代IP视频教程](https://youtu.be/pKrlfRRB0gU) | [解决常见订阅测试-1问题教程](https://youtu.be/kYQxV1G-ePw)
-- [VLESS免费节点部署教程](https://youtu.be/dPH63nITA0M) | [Trojan免费节点部署教程](https://youtu.be/uh27CVVi6HA) | [从入门到精通免费部署教程](https://youtu.be/ag12Rpc9KP4) | [聚合节点订阅教程](https://youtu.be/YBO2hf96150)
+- [trojan免费节点部署教程](https://youtu.be/dPH63nITA0M) | [Trojan免费节点部署教程](https://youtu.be/uh27CVVi6HA) | [从入门到精通免费部署教程](https://youtu.be/ag12Rpc9KP4) | [聚合节点订阅教程](https://youtu.be/YBO2hf96150)
 - [GitHub私有库存储优选IP文教程](https://youtu.be/vX3U3FuuTT8) | [CF免费KV存储优选IP文件教程](https://youtu.be/dzxezRV1v-o) [获取免费域名教程](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR) | [获取CF自家域名无限节点](https://youtu.be/novrPiMsK70)
 
 ## Workers 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=31s)
 <details>
 <summary>点击展开/收起</summary>
 	
-1. 部署 CF Worker：
-
-   - 在 CF Worker 控制台中创建一个新的 Worker。
+1. 部署 Cloudflare Worker：
+   - 在 Cloudflare Worker 控制台中创建一个新的 Worker。
    - 将 [_worker.js](https://github.com/amclubs/am-cf-trojan/blob/main/_worker.js) 的内容粘贴到 Worker 编辑器中。
+2. 给 workers绑定 自定义域： 
+   - 在 workers控制台的 `设置` 选项卡 -> 点击 `域和路由` -> 右方点击 -> `添加` -> 选择 `自定义域`。
+   - 填入你已转入 CloudFlare 域名 (amclubss.com) 解析服务的次级域名，例如:`trojan.amclubss.com`后 点击 `添加域`，等待证书生效即可。
+3. 给PASSWORD设置KV存储桶(可选项，推荐设置)： 
+   - 在 CloudFlare主页的左边菜单的 ` 存储和数据库` 选项卡 -> 展开选择点击 `KV` -> 右方点击 -> `创建` -> 填入 `命名空间名称`(此名称自己命名) 后 -> 点击 `添加`。(此步已有可忽略)
+   - 在 workers控制台的 `设置` 选项卡 -> 点击 `绑定` -> 右方点击 -> `添加` -> 选择 `KV 命名空间` -> 变量名称 填入 `amclubs`(此名称固定不能变) -> KV 命名空间 选择 在上面创建的 `命名空间名称`后 -> 右下方点击 `部署`。
+4. 访问订阅内容：
+   - 访问 `https://[YOUR-WORKERS-URL]/[PASSWORD]` 即可获取订阅内容（默认PASSWORD是：auto）。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?base64` Base64订阅格式，适用PassWall,SSR+等。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?clash` Clash订阅格式，适用OpenClash等。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?singbox` singbox订阅格式，适用singbox等。
+5. 修改默认PASSWORD变量，使用KV存储桶(可选项，推荐修改，防止别人用你节点)： 
+   - 访问 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e/ui` 即可进入修改PASSWORD页面 
+   - 在PASSWORD页面PASSWORD项 -> 填入 `新的PASSWORD` 后 -> 点击 `Save`。
+   - 保存成功后，原PASSWORD已作废不能访问，用新PASSWORD访问  `https://trojan.amclubss.com/新的PASSWORD` 即可获取订阅内容。
 
-2. 添加优选线路:
-
-   - 给 `ipLocal` 按格式添加优选域名/优选IP，若不带端口号 TLS默认端口为443，#号后为备注别名，例如：
-
-     ```js
-     let ipLocal = [
-	      'visa.cn:443#youtube.com/@AM_CLUB 订阅频道获取更多教程',
-	      'icook.hk#t.me/AM_CLUBS 加入交流群解锁更多优选节点',
-	      'time.is:443#github.com/amclubs GitHub仓库查看更多项目'
-      ];
-     ```
-
-   - 或 给 `ipUrlTxt`或 `ipUrlCsv` 添加 **优选IP/域名** 地址，例如：
-
-     ```js
-     let ipUrlTxt = [
-	      'https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.txt',
-      ];
-     ```
-     ```js
-     let ipUrlCsv = [
-	      'https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.csv',
-      ];
-     ```
-
-3. 访问订阅内容：
-
-   - 访问 `https://[YOUR-WORKERS-URL]/[PASSWORD]` 即可获取订阅内容。
-   - 例如 `https://vless.google.workers.dev/auto` 就是你的通用自适应订阅地址。
-   - 例如 `https://vless.google.workers.dev/auto?sub` Base64订阅格式，适用PassWall,SSR+等。
-   - 例如 `https://vless.google.workers.dev/auto?clash` Clash订阅格式，适用OpenClash等。
-   - 例如 `https://vless.google.workers.dev/auto?singbox` singbox订阅格式，适用singbox等。
-
-4. 给 workers绑定 自定义域： 
-
-   - 在 workers控制台的 `触发器`选项卡，下方点击 `添加自定义域`。
-   - 填入你已转入 CF 域名解析服务的次级域名，例如:`vless.google.com`后 点击`添加自定义域`，等待证书生效即可。
 </details>
 
 ## Pages 上传 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=336s)
 <details>
 <summary>点击展开/收起</summary>
 	
-1. 部署 CF Pages：
+1. 部署 Cloudflare Pages：
    - 下载 [_worker.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-trojan/main/_worker.js.zip) 文件，并点上 Star !!!
-   - 在 CF Pages 控制台中选择 `上传资产`后，为你的项目取名后点击 `创建项目`，然后上传你下载好的 [_worker.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-trojan/main/_worker.js.zip) 文件后点击 `部署站点`。
-   - 部署完成后点击 `继续处理站点` 后，选择 `设置` > `环境变量` > **制作**为生产环境定义变量 > `添加变量`。
-     变量名称填写**PASSWORD**，值则为你的密码，后点击 `保存`即可。
-   - 返回 `部署` 选项卡，在右下角点击 `创建新部署` 后，重新上传 [_worker.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-trojan/main/_worker.js.zip) 文件后点击 `保存并部署` 即可。
-
-2. 添加优选线路:
-
- - 添加变量 `ipLocal` 本地静态的优选线路，若不带端口号 TLS默认端口为443，#号后为备注别名，例如：
-
-   ```
-   visa.cn:443#youtube.com/@AM_CLUB 订阅频道获取更多教程
-   icook.hk#t.me/AM_CLUBS 加入交流群解锁更多优选节点
-   time.is:443#github.com/amclubs GitHub仓库查看更多项目
-   time.is#你可以只放域名 如下
-   www.visa.com.sg
-   skk.moe#也可以放域名带端口 如下
-   www.wto.org:8443
-   www.csgo.com:2087#节点名放在井号之后即可
-   icook.hk#若不带端口号默认端口为443
-   104.17.152.41#IP也可以
-   [2606:4700:e7:25:4b9:f8f8:9bfb:774a]#IPv6也OK
-   ```
-- 或添加变量 `ipUrlTxt` 添加 **优选IP/域名** 地址，例如：
-   ```
-   https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.txt
-   ```
-
-- 或添加变量 `ipUrlCsv` 添加 **优选IP/域名** 地址，例如：
-   ```
-   https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.csv
-   ```
-
-3. 访问订阅内容：
-   - 访问 `https://[YOUR-PAGES-URL]/[PASSWORD]` 即可获取订阅内容。
-   - 例如 `https://am-cf-trojan.pages.dev/auto` 就是你的通用自适应订阅地址。
-   - 例如 `https://am-cf-trojan.pages.dev/auto?sub` Base64订阅格式，适用PassWall,SSR+等。
-   - 例如 `https://am-cf-trojan.pages.dev/auto?clash` Clash订阅格式，适用OpenClash等。
-   - 例如 `https://am-cf-trojan.pages.dev/auto?sb` singbox订阅格式，适用singbox等。
-   - 例如 `https://am-cf-trojan.pages.dev/auto?surge` surge订阅格式，适用surge 4/5。
-
-4. 给 Pages绑定 CNAME自定义域：
+   - 在 Cloudflare Pages 控制台中选择 `上传资产`后，为你的项目取名后点击 `创建项目`，然后上传你下载好的 [_worker.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-trojan/main/_worker.js.zip) 文件后点击 `部署站点`。
+2. 给 Pages绑定 CNAME自定义域：[无域名绑定Cloudflare部署视频教程]->[免费域名教程1](https://youtu.be/wHJ6TJiCF0s) [免费域名教程2](https://youtu.be/yEF1YoLVmig)  [免费域名教程3](https://www.youtube.com/watch?v=XS0EgqckUKo&t=320s)
    - 在 Pages控制台的 `自定义域`选项卡，下方点击 `设置自定义域`。
    - 填入你的自定义次级域名，注意不要使用你的根域名，例如：
-     您分配到的域名是 `cftest.dynv6.net`，则添加自定义域填入 `trojan.cftest.dynv6.net`即可；
-   - 按照 CF 的要求将返回你的域名DNS服务商，添加 该自定义域 `trojan`的 CNAME记录 `am-cf-trojan.pages.dev` 后，点击 `激活域`即可。
+     您分配到的域名是 `amclubss.com`，则添加自定义域填入 `trojan.amclubss.com`即可，点击 `激活域`即可。    
+3. 给PASSWORD设置KV存储桶(可选项，推荐设置)： 
+   - 在 CloudFlare主页的左边菜单的 ` 存储和数据库` 选项卡 -> 展开选择点击 `KV` -> 右方点击 -> `创建` -> 填入 `命名空间名称`(此名称自己命名) 后 -> 点击 `添加`。(此步已有可忽略)
+   - 在 workers控制台的 `设置` 选项卡 -> 点击 `绑定` -> 右方点击 -> `添加` -> 选择 `KV 命名空间` -> 变量名称 填入 `amclubs`(此名称固定不能变) -> KV 命名空间 选择 在上面创建的 `命名空间名称`后 -> 右下方点击 `部署`。
+   - 在 `设置` 选项卡，在右上角点击 `创建部署` 后，重新上传 [_worker.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-trojan/main/_worker.js.zip) 文件后点击 `保存并部署` 即可。
+4. 访问订阅内容：
+   - 访问 `https://[YOUR-WORKERS-URL]/[PASSWORD]` 即可获取订阅内容（默认PASSWORD是：auto）。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?base64` Base64订阅格式，适用PassWall,SSR+等。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?clash` Clash订阅格式，适用OpenClash等。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?singbox` singbox订阅格式，适用singbox等。
+5. 修改默认PASSWORD变量，使用KV存储桶(可选项，推荐修改，防止别人用你节点)： 
+   - 访问 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e/ui` 即可进入修改PASSWORD页面 
+   - 在PASSWORD页面PASSWORD项 -> 填入 `新的PASSWORD` 后-> 点击 `Save`。
+   - 保存成功后，原PASSWORD已作废不能访问，用新PASSWORD访问  `https://trojan.amclubss.com/新的PASSWORD` 即可获取订阅内容。
+
 </details>
 
 ## Pages GitHub 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=511s)
 <details>
 <summary>点击展开/收起</summary>
 	
-1. 部署 CF Pages：
+1. 部署 Cloudflare Pages：
    - 在 Github 上先 Fork 本项目，并点上 Star !!!
-   - 在 CF Pages 控制台中选择 `连接到 Git`后，选中 `am-cf-trojan`项目后点击 `开始设置`。
-   - 在 `设置构建和部署`页面下方，选择 `环境变量（高级）`后并 `添加变量`，
-     变量名称填写**PASSWORD**，值则为你的密码，后点击 `保存并部署`即可。
-
-2. 添加优选线路:
-
- - 添加变量 `ipLocal` 本地静态的优选线路，若不带端口号 TLS默认端口为443，#号后为备注别名，例如：
-
-   ```
-   visa.cn:443#youtube.com/@AM_CLUB 订阅频道获取更多教程
-   icook.hk#t.me/AM_CLUBS 加入交流群解锁更多优选节点
-   time.is:443#github.com/amclubs GitHub仓库查看更多项目
-   time.is#你可以只放域名 如下
-   www.visa.com.sg
-   skk.moe#也可以放域名带端口 如下
-   www.wto.org:8443
-   www.csgo.com:2087#节点名放在井号之后即可
-   icook.hk#若不带端口号默认端口为443
-   104.17.152.41#IP也可以
-   [2606:4700:e7:25:4b9:f8f8:9bfb:774a]#IPv6也OK
-   ```
-- 或添加变量 `ipUrlTxt` 添加 **优选IP/域名** 地址，例如：
-   ```
-   https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.txt
-   ```
-
-- 或添加变量 `ipUrlCsv` 添加 **优选IP/域名** 地址，例如：
-   ```
-   https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.csv
-   ```
-
-3. 访问订阅内容：
-   - 访问 `https://[YOUR-PAGES-URL]/[PASSWORD]` 即可获取订阅内容。
-   - 例如 `https://am-cf-trojan.pages.dev/auto` 就是你的通用自适应订阅地址。
-   - 例如 `https://am-cf-trojan.pages.dev/auto?sub` Base64订阅格式，适用PassWall,SSR+等。
-   - 例如 `https://am-cf-trojan.pages.dev/auto?clash` Clash订阅格式，适用OpenClash等。
-   - 例如 `https://am-cf-trojan.pages.dev/auto?sb` singbox订阅格式，适用singbox等。
-   - 例如 `https://am-cf-trojan.pages.dev/auto?surge` surge订阅格式，适用surge 4/5。
-
-4. 给 Pages绑定 CNAME自定义域：
+   - 在 Cloudflare Pages 控制台中选择 `连接到 Git`后，选中 `am-cf-tunnel`项目后点击 `开始设置`。
+   - 在 `设置构建和部署`页面下方，后点击 `保存并部署`即可。
+2. 给 Pages绑定 CNAME自定义域：[无域名绑定Cloudflare部署视频教程]->[免费域名教程1](https://youtu.be/wHJ6TJiCF0s) [免费域名教程2](https://youtu.be/yEF1YoLVmig)  [免费域名教程3](https://www.youtube.com/watch?v=XS0EgqckUKo&t=320s)
    - 在 Pages控制台的 `自定义域`选项卡，下方点击 `设置自定义域`。
    - 填入你的自定义次级域名，注意不要使用你的根域名，例如：
-     您分配到的域名是 `cftest.dynv6.net`，则添加自定义域填入 `trojan.cftest.dynv6.net`即可；
-   - 按照 CF 的要求将返回你的域名DNS服务商，添加 该自定义域 `trojan`的 CNAME记录 `am-cf-trojan.pages.dev` 后，点击 `激活域`即可。
+     您分配到的域名是 `amclubss.com`，则添加自定义域填入 `trojan.amclubss.com`即可，点击 `激活域`即可。    
+3. 给PASSWORD设置KV存储桶(可选项，推荐设置)： 
+   - 在 CloudFlare主页的左边菜单的 ` 存储和数据库` 选项卡 -> 展开选择点击 `KV` -> 右方点击 -> `创建` -> 填入 `命名空间名称`(此名称自己命名) 后 -> 点击 `添加`。(此步已有可忽略)
+   - 在 workers控制台的 `设置` 选项卡 -> 点击 `绑定` -> 右方点击 -> `添加` -> 选择 `KV 命名空间` -> 变量名称 填入 `amclubs`(此名称固定不能变) -> KV 命名空间 选择 在上面创建的 `命名空间名称`后 -> 右下方点击 `部署`。
+   - 在 `设置` 选项卡，在右上角点击 `创建部署` 后，重新选择 `部署` 即可。
+4. 访问订阅内容：
+   - 访问 `https://[YOUR-WORKERS-URL]/[PASSWORD]` 即可获取订阅内容（默认PASSWORD是：auto）。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?base64` Base64订阅格式，适用PassWall,SSR+等。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?clash` Clash订阅格式，适用OpenClash等。
+   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?singbox` singbox订阅格式，适用singbox等。
+5. 修改默认PASSWORD变量，使用KV存储桶(可选项，推荐修改，防止别人用你节点)： 
+   - 访问 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e/ui` 即可进入修改PASSWORD页面 
+   - 在PASSWORD页面PASSWORD项 -> 填入 `新的PASSWORD` 后 -> 点击 `Save`。
+   - 保存成功后，原PASSWORD已作废不能访问，用新PASSWORD访问  `https://trojan.amclubss.com/新的PASSWORD` 即可获取订阅内容。
 
 </details>
 
