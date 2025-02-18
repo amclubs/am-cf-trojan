@@ -27,12 +27,13 @@
    - 在 workers控制台的 `设置` 选项卡 -> 点击 `绑定` -> 右方点击 -> `添加` -> 选择 `KV 命名空间` -> 变量名称 填入 `amclubs`(此名称固定不能变) -> KV 命名空间 选择 在上面创建的 `命名空间名称`后 -> 右下方点击 `部署`。
 4. 访问订阅内容：
    - 访问 `https://[YOUR-WORKERS-URL]/[PASSWORD]` 即可获取订阅内容（默认PASSWORD是：auto）。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?base64` Base64订阅格式，适用PassWall,SSR+等。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?clash` Clash订阅格式，适用OpenClash等。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?singbox` singbox订阅格式，适用singbox等。
+   - 例如 `https://trojan.amclubss.com/auto?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
+   - 例如 `https://trojan.amclubss.com/auto?base64` Base64订阅格式，适用PassWall,SSR+等。
+   - 例如 `https://trojan.amclubss.com/auto?clash` Clash订阅格式，适用OpenClash等。
+   - 例如 `https://trojan.amclubss.com/auto?singbox` singbox订阅格式，适用singbox等。
+   - 例如 `https://trojan.amclubss.com/auto?sub&IP_URL=https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipUrl.txt` 自动义变量等参数。
 5. 修改默认PASSWORD变量，使用KV存储桶(可选项，推荐修改，防止别人用你节点)： 
-   - 访问 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e/ui` 即可进入修改PASSWORD页面 
+   - 访问 `https://trojan.amclubss.com/auto/ui` 即可进入修改PASSWORD页面 
    - 在PASSWORD页面PASSWORD项 -> 填入 `新的PASSWORD` 后 -> 点击 `Save`。
    - 保存成功后，原PASSWORD已作废不能访问，用新PASSWORD访问  `https://trojan.amclubss.com/新的PASSWORD` 即可获取订阅内容。
 
@@ -55,12 +56,13 @@
    - 在 `设置` 选项卡，在右上角点击 `创建部署` 后，重新上传 [_worker.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-trojan/main/_worker.js.zip) 文件后点击 `保存并部署` 即可。
 4. 访问订阅内容：
    - 访问 `https://[YOUR-WORKERS-URL]/[PASSWORD]` 即可获取订阅内容（默认PASSWORD是：auto）。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?base64` Base64订阅格式，适用PassWall,SSR+等。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?clash` Clash订阅格式，适用OpenClash等。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?singbox` singbox订阅格式，适用singbox等。
+   - 例如 `https://trojan.amclubss.com/auto?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
+   - 例如 `https://trojan.amclubss.com/auto?base64` Base64订阅格式，适用PassWall,SSR+等。
+   - 例如 `https://trojan.amclubss.com/auto?clash` Clash订阅格式，适用OpenClash等。
+   - 例如 `https://trojan.amclubss.com/auto?singbox` singbox订阅格式，适用singbox等。
+   - 例如 `https://trojan.amclubss.com/auto?sub&IP_URL=https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipUrl.txt` 自动义变量等参数。
 5. 修改默认PASSWORD变量，使用KV存储桶(可选项，推荐修改，防止别人用你节点)： 
-   - 访问 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e/ui` 即可进入修改PASSWORD页面 
+   - 访问 `https://trojan.amclubss.com/auto/ui` 即可进入修改PASSWORD页面 
    - 在PASSWORD页面PASSWORD项 -> 填入 `新的PASSWORD` 后-> 点击 `Save`。
    - 保存成功后，原PASSWORD已作废不能访问，用新PASSWORD访问  `https://trojan.amclubss.com/新的PASSWORD` 即可获取订阅内容。
 
@@ -84,12 +86,13 @@
    - 在 `设置` 选项卡，在右上角点击 `创建部署` 后，重新选择 `部署` 即可。
 4. 访问订阅内容：
    - 访问 `https://[YOUR-WORKERS-URL]/[PASSWORD]` 即可获取订阅内容（默认PASSWORD是：auto）。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?base64` Base64订阅格式，适用PassWall,SSR+等。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?clash` Clash订阅格式，适用OpenClash等。
-   - 例如 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e?singbox` singbox订阅格式，适用singbox等。
+   - 例如 `https://trojan.amclubss.com/auto?sub` 就是你的通用自适应订阅地址(Quantumult X、Clash、singbox、小火箭、v2rayN、v2rayU、surge、PassWall、SSR+、Karing等)。
+   - 例如 `https://trojan.amclubss.com/auto?base64` Base64订阅格式，适用PassWall,SSR+等。
+   - 例如 `https://trojan.amclubss.com/auto?clash` Clash订阅格式，适用OpenClash等。
+   - 例如 `https://trojan.amclubss.com/auto?singbox` singbox订阅格式，适用singbox等。
+   - 例如 `https://trojan.amclubss.com/auto?sub&IP_URL=https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipUrl.txt` 自动义变量等参数。
 5. 修改默认PASSWORD变量，使用KV存储桶(可选项，推荐修改，防止别人用你节点)： 
-   - 访问 `https://trojan.amclubss.com/d0298536-d670-4045-bbb1-ddd5ea68683e/ui` 即可进入修改PASSWORD页面 
+   - 访问 `https://trojan.amclubss.com/auto/ui` 即可进入修改PASSWORD页面 
    - 在PASSWORD页面PASSWORD项 -> 填入 `新的PASSWORD` 后 -> 点击 `Save`。
    - 保存成功后，原PASSWORD已作废不能访问，用新PASSWORD访问  `https://trojan.amclubss.com/新的PASSWORD` 即可获取订阅内容。
 
