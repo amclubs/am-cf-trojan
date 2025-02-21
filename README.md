@@ -39,7 +39,7 @@
 
 </details>
 
-## Pages 上传 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=336s)
+## Pages 上传 部署方法 [视频教程](https://www.youtube.com/watch?v=wgeM9XvZ5RA&t=1738s)
 <details>
 <summary>点击展开/收起</summary>
 	
