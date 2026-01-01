@@ -12,6 +12,7 @@
 - [trojan免费节点部署教程](https://youtu.be/dPH63nITA0M) | [Trojan免费节点部署教程](https://youtu.be/uh27CVVi6HA) | [从入门到精通免费部署教程](https://youtu.be/ag12Rpc9KP4) | [聚合节点订阅教程](https://youtu.be/YBO2hf96150)
 - [GitHub私有库存储优选IP文教程](https://youtu.be/vX3U3FuuTT8) | [CF免费KV存储优选IP文件教程](https://youtu.be/dzxezRV1v-o) [获取免费域名教程](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR) | [获取CF自家域名无限节点](https://youtu.be/novrPiMsK70)
 
+## 
 ## Workers 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=31s)
 <details>
 <summary>点击展开/收起</summary>
@@ -39,6 +40,7 @@
 
 </details>
 
+## 
 ## Pages 上传 部署方法 [视频教程](https://www.youtube.com/watch?v=wgeM9XvZ5RA&t=1738s)
 <details>
 <summary>点击展开/收起</summary>
@@ -68,6 +70,7 @@
 
 </details>
 
+## 
 ## Pages GitHub 部署方法 [视频教程](https://www.youtube.com/watch?v=uh27CVVi6HA&t=511s)
 <details>
 <summary>点击展开/收起</summary>
@@ -98,26 +101,33 @@
 
 </details>
 
-## 变量说明 [视频教程](https://www.youtube.com/watch?v=ag12Rpc9KP4&t=739s)
+## 
+## 🔧五、变量说明 [视频教程](https://www.youtube.com/watch?v=i-XnnP-MptY&t=468s)
 | 变量名 | 示例 | 必填 | 备注 | YT |
 |-----|-----|-----|-----|-----|
-| PASSWORD         | auto （默认值）               |✅| 节点的密码，可以取任意值                                       |  |
-| PROXYIP          | proxyip.amclubs.kozow.com </br>或</br> [https://raw.github.../proxyip.txt](https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/proxyip.txt) |❌| 访问CloudFlare的CDN代理节点(支持多ProxyIP, ProxyIP之间使用`,`或 换行 作间隔),支持端口设置默认443 如: proxyip.amclubs.kozow.com:2053 支持远程txt和csv文件 | [Video](https://youtu.be/pKrlfRRB0gU) |
-| SOCKS5           | user:password@127.0.0.1:1080         |❌| 优先作为访问CFCDN站点的SOCKS5代理                                                   | [Video](https://youtu.be/Bw82BH_ecC4) |
-| DNS_RESOLVER_URL | https://cloudflare-dns.com/dns-query |❌| DNS解析获取作用，小白勿用                                                           |  |
-| IP_LOCAL         | `icook.hk:2053#官方优选域名`           |❌| （不推荐）本地优选域名/优选IP(支持多元素之间`,`或 换行 作间隔)                                 | |
-| IP_URL           | [https://raw.github.../ipUrl.txt](https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipUrl.txt)           |❌| （推荐）优选(ipv4、ipv6、域名、API)地址(支持多个之间`,`或 换行 作间隔)，支持文件连接后里带PROXYIP参数，可以实现不同区域优先IP使用不同的PROXYIP固定区域，解决IP乱跳问题  | [教程](https://www.youtube.com/watch?v=4fcyJjstFdg&t=349s)|
-| IP_URL_TXT       | [https://raw.github.../ipv4.txt](https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.txt) |❌| （不推荐）优选ipv4、ipv6、域名、API地址(支持多个之间`,`或 换行 作间隔) |[教程](https://youtu.be/dzxezRV1v-o) [教程](https://youtu.be/vX3U3FuuTT8)|
-| IP_URL_CSV       | [https://raw.github.../ipv4.csv](https://raw.githubusercontent.com/amclubs/am-cf-tunnel/main/ipv4.csv) |❌| （不推荐）优选ipv4/6的IP测速结果(支持多元素, 元素之间使用`,`作间隔) |[教程](https://youtu.be/vX3U3FuuTT8)|
-| NO_TLS           | true/false                           |❌| 默认false,是否开启TLS系列端口，只有workers部署才可以使非用TLS系列端口             | |
-| SL               | 5                                    |❌| `CSV`文件里的测速结果满足速度下限                                                     ||
-| SUB_CONFIG       | [https://raw.github.../ACL4SSR_Online_Mini.ini](https://raw.githubusercontent.com/amclubs/ACL4SSR/main/Clash/config/ACL4SSR_Online_Full_MultiMode.ini) |❌| clash、singbox等 订阅转换配置文件  ||
-| SUB_CONVERTER    | url.v1.mk                    |❌| clash、singbox等 订阅转换后端的api地址                               ||
-| SUB_NAME         | AM科技                             |❌ | 订阅名称                                                     ||
-| CF_EMAIL         | test@gmail.com                       |❌| CF账户邮箱(要和`CF_KEY`同时填才生效, 订阅信息将显示请求使用量, 小白别用)                        ||
-| CF_KEY          | c6a944b5c9c18c235288bced8b85e         |❌| CF账户Global API Key(要和`CF_EMAIL`同时填才生效, 订阅信息将显示请求使用量, 小白别用)           ||
-| TG_TOKEN        | 6823456:XXXXXXX0qExVUhHDAbXXXqWXgBA   |❌| 发送TG通知的机器人token                       ||
-| TG_ID           | 6946912345                            |❌ | 接收TG通知的账户数字ID                                       ||
+| ID   | ec872d8f-72b0-4a04-b612-0327d85e18ed（默认）|✅| 支持Cloudflare的KV存储桶设置 [在线获取UUID](https://1024tools.com/uuid) VLESS、Trojan节点共用 | |
+| D_URL | https://cloudflare-dns.com/dns-query |❌| DNS解析获取作用，小白勿用                                                           |  |
+
+## 
+## ⚙️ Snippets 部署方法 [视频教程](https://www.youtube.com/watch?v=i-XnnP-MptY&t=165s)
+<details>
+<summary>点击展开/收起</summary>
+
+1. 进入 Cloudflare Snippets：
+   - 在 CloudFlare主页的左边菜单的 `域` 选项卡 -> 点击 `域` 菜单 -> 进入到 `域管理` -> 找到已开通**Snippets**的域名点击进入 -> 进入后在左边菜单的 `规则` 选项卡 点击展开 -> 点击 `Snippets` 菜单 -> 进入 `Snippets`片段代码主页面。
+2. 部署 Cloudflare Snippets代码：
+   - 在 `Snippets`片段代码主页面的 右下角方点击 `+创建片段` 图标进入代码编辑页面 -> 在右上方创建片段 -> 填入 `片段名称`(此名称自己命名)。
+   - 将 [_worker.js](https://github.com/amclubs/am-cf-trojan/blob/main/snippets.js) 的内容粘贴到 `Snippets` 编辑器中 -> 修改第一行代码`id`变量值(默认登录密码(UUID)是：ec872d8f-72b0-4a04-b612-0327d85e18ed) 建议自己要修改 [在线获取UUID](https://1024tools.com/uuid)。
+   - 点击右上方 `片段规则` 图标 -> 选择 `自定义筛选表达式` -> 字段 选择 `主机名` -> 运算符 选择 `运算符` -> 值 填入 `Snippets进入的域名名称，再前面加多一节子域名名称`(子域名名称自己命名) 后 -> 点击 `完成`。(此步已有可忽略)
+   - 在 码编辑页面 右上角方点击 `部署`  即可。
+3. 验证部署是否成功：
+   - 访问 `https://[YOUR-Snippets-URL]` 即可进入登录页面,登录成功就是完成部署(默认登录密码(UUID)是：ec872d8f-72b0-4a04-b612-0327d85e18ed)。
+   - 例如 `https://vless.amclubss.com` 然后进入登录页面 -> 输入密码 `ec872d8f-72b0-4a04-b612-0327d85e18ed` -> 点击登录 -> 成功登录。 
+4. 订阅连接和节点生成使用方法：  [视频教程](https://www.youtube.com/watch?v=i-XnnP-MptY&t=596s)
+   - 进入 [am-cf-tunnel-sub](https://github.com/amclubs/am-cf-tunnel-sub) 项目 -> 根据项目教程部署和使用。(此步已有可忽略)
+   - 本频道订阅器转换地址：https://sub.amclubss.com
+   
+</details>
 
 ## 五、已适配订阅工具 [点击进入视频教程](https://youtu.be/xGOL57cmvaw) [点进进入karing视频教程](https://youtu.be/M3vLLBWfuFg)
 - Mac（苹果电脑）
